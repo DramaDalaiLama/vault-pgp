@@ -18,12 +18,18 @@ Vagrant.configure(2) do |config|
 
     jenkins.vm.provision "shell", inline: <<-SHELL
       sudo yum install -y java-1.7.0-openjdk git epel-release
-      sudo yum install -y ansible
+      sudo yum install -y ansible unzip man vim
+      sudo yum install -y mysql-server
       sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
       sudo rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
       sudo yum install -y jenkins
       sudo chkconfig jenkins on
       sudo service jenkins start
+      sudo service mysqld start
+
+      sudo unzip /vagrant/vault_0.4.1_linux_amd64.zip  -d /opt/vault/ || echo $?
+      sudo ln -s /opt/vault/vault /usr/bin/vault || echo $?
+      sudo /usr/bin/mysqladmin -u root password 'new-password' || echo $?
     SHELL
 
   end
