@@ -29,7 +29,7 @@ Vagrant.configure(2) do |config|
 
       sudo unzip /vagrant/vault_0.4.1_linux_amd64.zip  -d /opt/vault/ || echo $?
       sudo ln -s /opt/vault/vault /usr/bin/vault || echo $?
-      sudo /usr/bin/mysqladmin -u root password 'new-password' || echo $?
+      sudo /usr/bin/mysqladmin -u root password 'vagrant' || echo $?
     SHELL
 
   end
