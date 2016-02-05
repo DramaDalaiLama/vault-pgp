@@ -8,7 +8,7 @@
 Vagrant.configure(2) do |config|
   config.vm.define "jenkins-vault" do |jenkins|
     jenkins.vm.box = "bento/centos-6.7"
-    jenkins.vm.hostname = "jenkins"
+    jenkins.vm.hostname = "jenkins-vault"
     jenkins.vm.network "forwarded_port", guest: 8080, host: 8080
     jenkins.vm.network "private_network", ip: "192.168.50.1",
       virtualbox__intnet: true
@@ -17,7 +17,8 @@ Vagrant.configure(2) do |config|
     end
 
     jenkins.vm.provision "shell", inline: <<-SHELL
-      sudo yum install -y java-1.7.0-openjdk, git, epel-release, ansible
+      sudo yum install -y java-1.7.0-openjdk git epel-release
+      sudo yum install -y ansible
       sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
       sudo rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
       sudo yum install -y jenkins
